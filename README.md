@@ -22,13 +22,13 @@ $('.checkOnlyDates').onlyDates({format:'d/m/y', addClassIfError:'required', inva
 
 Default messages
 ----------------
-invalidDateMessage: Message to show when date is invalid.
+<b>invalidDateMessage</b>: Message to show when date is invalid.
 
-requiredMessage: Message to show when the field is empty.
+<b>requiredMessage</b>: Message to show when the field is empty.
 
-format: This parameter provide the input mask. By default is 'd/m/y'.
+<b>format</b>: This parameter provide the input mask. By default is 'd/m/y'.
 
-addClassIfError: This parameter indicates the class that is must add when is produced a error. By default is 'error'.
+<b>addClassIfError</b>: This parameter indicates the class that is must add when is produced a error. By default is 'error'.
 
 Para más información sobre diseño y desarrollo web visita <a target="_blank"  href="http://www.islavisual.com/articulos/desarrollo_web/">islavisual.com</a>.
 
