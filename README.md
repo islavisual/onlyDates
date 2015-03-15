@@ -11,6 +11,8 @@ Install
 <script src="js/onlyDates.js"></script>
 ```
 
+How to use
+----------
 ```javascript
 // To use with default parameters
 $('.checkOnlyDates').onlyDates();
