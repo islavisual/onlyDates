@@ -18,7 +18,7 @@ How to use
 $('.checkOnlyDates').onlyDates();
 // To use with custom parameters
 $('.checkOnlyDates').onlyDates({format:'d/m/y', addClassIfError:'required', invalidDateMessage:'Invalid Date', requiredMessage:'Required Field', autocomplete:'default'});
-// To use with autocomplete capability and othe format
+// To use with autocomplete capability and other format
 $('.checkOnlyDates').onlyDates({format:'y-m-d', autocomplete:'on'});
 ```
 
