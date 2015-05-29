@@ -1,4 +1,4 @@
-# onlyDates
+# onlyDates 1.03
 OnlyDates is a jQuery plugin which functions as input mask to date type fields.
 
 This plugin is cross browser, multi-language, you can integrate it with others jQuery plugins and provides the necessary skills to use on mobile devices.
@@ -17,7 +17,9 @@ How to use
 // To use with default parameters
 $('.checkOnlyDates').onlyDates();
 // To use with custom parameters
-$('.checkOnlyDates').onlyDates({format:'d/m/y', addClassIfError:'required', invalidDateMessage:'Invalid Date', requiredMessage:'Required Field'});
+$('.checkOnlyDates').onlyDates({format:'d/m/y', addClassIfError:'required', invalidDateMessage:'Invalid Date', requiredMessage:'Required Field', autocomplete:'default'});
+// To use with autocomplete capability and othe format
+$('.checkOnlyDates').onlyDates({format:'y-m-d', autocomplete:'on'});
 ```
 
 Default messages
@@ -29,6 +31,8 @@ Default messages
 <b>format</b>: This parameter provide the input mask. By default is 'd/m/y'.
 
 <b>addClassIfError</b>: This parameter indicates the class that is must add when is produced a error. By default is 'error'.
+
+<b>autocomplete</b>: This parameter enables / disables the autocomplete capability into date field. Your posible values are 'on and 'off'. By default, this has not any effect about input field.
 
 Para más información sobre diseño y desarrollo web visita <a target="_blank"  href="http://www.islavisual.com/articulos/desarrollo_web/">islavisual.com</a>.
 
