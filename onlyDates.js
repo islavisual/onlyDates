@@ -4,17 +4,19 @@ jQuery.fn.onlyDates   = function(options){
             requiredMessage:'Required field',
             format:'d/m/y',
             addClassIfError:'error',
+            autocomplete:'default',
             placeholder:('placeholder' in document.createElement("input"))
         }, options );
 
-        var sep = opt.format.replace(/[A-Za-z]/g, "")[0];
-        var nav = navigator.userAgent.toLowerCase();
+        var sep         = opt.format.replace(/[A-Za-z]/g, "")[0];
+        var nav     = navigator.userAgent.toLowerCase();
+
         if('ontouchstart' in document.documentElement){
             $(this).removeClass('checkOnlyDates').attr("type", 'date');
             return false;
         }
 
-       // $(this).attr("autocomplete", 'off');
+        if(opt.autocomplete != "default") $(this).attr("autocomplete", opt.autocomplete);
 
         return this.each(function() {
             // If the format isn't supported show message
@@ -63,12 +65,21 @@ jQuery.fn.onlyDates   = function(options){
                 });
                 // Keydown event
                 $(this).keydown(function(e) {
+                    // If key is delete, supr or tab
+                    if(e.ctrlKey || e.which == 8  || e.which == 46 || e.which == 9) return true;
+
                     // Declare main vars
                     var key = e.which || 0, val  = $(e.target).val(), gst = getSelectionText(e), position = gst[1], newVal = 0;
 
+                    $(e.target).val($(e.target).val().replace(sep+sep, sep));
+
                     // If key pressed is Numpad recalcule key for extract the character
-                    if((key >= 96 && key <= 105)) key = key - 48;
+                    if((key >= 96 && key <= 105) && !isSep(key, e)) key = key - 48;
                     var char = String.fromCharCode(key);
+
+                    // If the key is a separator readjust
+                    if(e.which == 111 || (e.which == 55 && e.shiftKey)){ char  = "/"; key = 111; if(char != sep) return false; }
+                    if((e.which == 109 || e.which == 173)){ char  = "-"; key = 109; if(char != sep) return false; }
 
                     //If browser is IE9 or lower and ctrlKey|shiftKey pressed, return false
                     if((e.ctrlKey || e.shiftKey) && (nav.indexOf('msie') != -1 && parseInt(nav.split('msie')[1]) < 9)) return false;
@@ -77,11 +88,14 @@ jQuery.fn.onlyDates   = function(options){
                     if(val.length > 10){ return false};
 
                     // If value begin by 'sep' return false;
-                    if(val == '' && (key == 111 || key == 109)){ return false; }
-                    else if(val != '' && val.substr(val.length-1, 1) == sep && (key == 111 || key == 109)) { return false; }
+                    if(val == '' && isSep(key, e)){ return false; }
+
+                    // Doesn't allow double separator
+                    if(val != '' && val.substr(val.length-1, 1) == sep && isSep(key, e)) { return false; }
+                    if(val != '' && val.substr(val.length-1, 1) == sep && isSep(key, e)) { return false; }
 
                     // If there is more than 2 'sep' signs
-                    if(val.split(sep).length == 3 && (key==111 || key == 109)) return false;
+                    if(val.split(sep).length == 3 && isSep(key, e)) return false;
 
                     // If there is selected text update the val property
                     if(gst[0] != ''){
@@ -127,7 +141,6 @@ jQuery.fn.onlyDates   = function(options){
                         val = newVal;
                     }
                     // If key pressed is down cursor add 1 by 1
-
                     var oPattern, sPattern, tPattern, fPattern,lPattern;
                     var p1  = opt.format.indexOf(sep), p2 = opt.format.indexOf(sep, p1+1);
                     var d1  = opt.format.substring(0,p1), d2 = opt.format.substring(p1+1, p2), d3 =  opt.format.substring(p2+1);
@@ -145,6 +158,7 @@ jQuery.fn.onlyDates   = function(options){
                         fPattern = /^(\d{1,4})(\/|-)(\d{1,2})(\/|-)$/;
                         lPattern = /^(\d{1,4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
                     }
+
                     var oMatch = val.match(oPattern); // is dd
                     var sMatch = val.match(sPattern); // is dd/
                     var tMatch = val.match(tPattern); // is dd/mm
@@ -186,11 +200,12 @@ jQuery.fn.onlyDates   = function(options){
                     // If 'newVal' parameter is set, reallocate the value and repositioned the cursor
                     if(newVal != 0){ $(e.target).val(newVal).get(0).selectionStart = position; $(e.target).get(0).selectionEnd = position; }
 
-                   return ( key == 8 || key == 9 || key == 13 || key == 46 || (sep == '-' && key == 109) || (sep == '/' && key == 111) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key >= 112 && key <= 123));
+                   return ( key == 8 || key == 9 || key == 13 || key == 46 || ((sep == '-' || sep == '/') && isSep(key, e)) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key >= 112 && key <= 123));
                 });
             }
         });
 
+        function isSep(key, e){ var res = false, code = -1, sepKeysCode = new Array(111,109); code = jQuery.inArray( key, sepKeysCode ); if(code != -1) res = true; return res; }
         function getSelectionText(e) {
             if (window.getSelection) {
                 try {
