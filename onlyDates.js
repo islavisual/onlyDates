@@ -1,5 +1,4 @@
-// dataList 1.04 (https://github.com/islavisual/dataList).
-// Copyright 2015 Islavisual. Licensed under MIT (https://github.com/islavisual/dataList/blob/master/LICENSE). 
+// onlyDates Copyright 2015 Islavisual. Licensed under MIT (https://github.com/islavisual/onlyDates/blob/master/LICENSE). 
 // Author: Pablo E. Fernández (islavisual@gmail.com). 
 // Last update: 26/01/2016
 jQuery.fn.onlyDates   = function(options){
