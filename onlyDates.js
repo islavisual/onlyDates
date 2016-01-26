@@ -1,3 +1,4 @@
+
 jQuery.fn.onlyDates   = function(options){
         var opt = $.extend({
             invalidDateMessage:'Invalid date',
@@ -8,7 +9,7 @@ jQuery.fn.onlyDates   = function(options){
             placeholder:('placeholder' in document.createElement("input"))
         }, options );
 
-        var sep         = opt.format.replace(/[A-Za-z]/g, "")[0];
+        var sep     = opt.format.replace(/[A-Za-z]/g, "")[0];
         var nav     = navigator.userAgent.toLowerCase();
 
         if('ontouchstart' in document.documentElement){
@@ -17,6 +18,9 @@ jQuery.fn.onlyDates   = function(options){
         }
 
         if(opt.autocomplete != "default") $(this).attr("autocomplete", opt.autocomplete);
+        
+        var forwardSlash = 111, dash = 55;
+        if(navigator.userAgent.indexOf('Mac OS') != -1){ forwardSlash = 191; dash = 189 }
 
         return this.each(function() {
             // If the format isn't supported show message
@@ -78,7 +82,7 @@ jQuery.fn.onlyDates   = function(options){
                     var char = String.fromCharCode(key);
 
                     // If the key is a separator readjust
-                    if(e.which == 111 || (e.which == 55 && e.shiftKey)){ char  = "/"; key = 111; if(char != sep) return false; }
+                    if(e.which == forwardSlash || (e.which == dash && e.shiftKey)){ char  = "/"; key = forwardSlash; if(char != sep) return false; }
                     if((e.which == 109 || e.which == 173)){ char  = "-"; key = 109; if(char != sep) return false; }
 
                     //If browser is IE9 or lower and ctrlKey|shiftKey pressed, return false
@@ -205,7 +209,7 @@ jQuery.fn.onlyDates   = function(options){
             }
         });
 
-        function isSep(key, e){ var res = false, code = -1, sepKeysCode = new Array(111,109); code = jQuery.inArray( key, sepKeysCode ); if(code != -1) res = true; return res; }
+        function isSep(key, e){ var res = false, code = -1, sepKeysCode = new Array(forwardSlash,109); code = jQuery.inArray( key, sepKeysCode ); if(code != -1) res = true; return res; }
         function getSelectionText(e) {
             if (window.getSelection) {
                 try {
