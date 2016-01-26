@@ -1,4 +1,4 @@
-# onlyDates 1.03
+# onlyDates 1.04
 OnlyDates is a jQuery plugin which functions as input mask to date type fields.
 
 This plugin is cross browser, multi-language, you can integrate it with others jQuery plugins and provides the necessary skills to use on mobile devices.
